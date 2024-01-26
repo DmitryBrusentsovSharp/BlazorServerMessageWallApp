@@ -1,0 +1,47 @@
+﻿@page "/messagewall"
+@page "/message/tim"
+
+<PageTitle>
+	Custom Message Wall
+</PageTitle>
+
+<h3>Message Wall</h3>
+
+<EditForm Model="model" OnValidSubmit="ValidSubmission">
+	<DataAnnotationsValidator />
+	<ValidationSummary/>
+
+	<label for="message" class="form-label">@nameof(model.FirstName)</label>
+	<InputText id="message" @bind-Value="model.FirstName" class="form-control"></InputText>
+
+	<button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+
+<EditForm Model="model" OnValidSubmit="ValidSubmission">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<label for="message" class="form-label">@nameof(model.LastName)</label>
+	<InputText id="message" @bind-Value="model.LastName" class="form-control"></InputText>
+
+	<button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+
+<ul>
+	@foreach (KeyValuePair<string, string> kvp in names)
+     {
+		<li>@kvp.Key</li>
+		<li>@kvp.Value</li>
+     }
+</ul>
+
+@code {
+	private MessageModel model = new();
+	private Dictionary<string, string> names = new();
+
+	private void ValidSubmission()
+	{
+		names.Add(model.FirstName, model.LastName);
+		model = new();
+	}
+}
